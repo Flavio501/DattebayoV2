@@ -17,6 +17,8 @@ public class Main extends javax.swing.JFrame {
     //ArrayList<String> errores = new ArrayList<>();
     DefaultTableModel dtm = new DefaultTableModel();
     DefaultTableModel dtm2 = new DefaultTableModel();
+    ArrayList<Token> tokens;
+    ArrayList<String> reglas;
     Lex lex = new Lex();
     Sint sint = new Sint();
 
@@ -148,9 +150,10 @@ public class Main extends javax.swing.JFrame {
         if (txtentrada.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Digite caracteres en el campo");
         }
-        ArrayList<Token> tokens = lex.parse(txtentrada.getText());
+        
+        //ANALISIS LEXICO
+        tokens = lex.parse(txtentrada.getText());
         for (Token token : tokens) {
-        	
             String a = ("" + token.getTipo());
             String b = ("" + token.getValor());
 
@@ -163,8 +166,12 @@ public class Main extends javax.swing.JFrame {
                 //atributos.add(b);
                 dtm.addRow(new Object[]{token.getTipo(), token.getValor()});
             }
-            
-            
+        }
+        
+        //ANALISIS SINTACTICO
+        reglas = sint.parse(tokens);
+        for(String s : reglas) {
+        	System.out.println(s);
         }
     }
 

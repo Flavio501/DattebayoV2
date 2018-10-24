@@ -23,14 +23,31 @@ public class Sint {
 			if(tokens.get(0).getTipo().toString() == "IDENTIFICADORES"
 	    			&& tokens.get(1).getTipo().toString() == "ASIGNACION"
 	    			&& tokens.get(2).getTipo().toString() == "ENTEROS"
-	    			&& tokens.get(3).getTipo().toString() == "TERMINADORES") {
-	    		reglas.add("ASIGNACION");
+	    			&& tokens.get(3).getTipo().toString() == "TERMINADORES"){
+				reglas.add("ASIGNACION");
 	    		tokens.remove(3);
 	    		tokens.remove(2);
 	    		tokens.remove(1);
 	    		tokens.remove(0);
-	    	}
-			else {
+	    	}else if(tokens.get(0).getTipo().toString() == "ENTEROS"
+		    		&& tokens.get(1).getTipo().toString() ==  "OPARIT"
+		    	    && tokens.get(2).getTipo().toString() ==  "ENTEROS"
+		    	    && tokens.get(3).getTipo().toString() == "TERMINADORES"){
+	    		reglas.add("OP_ARIT");
+			    tokens.remove(3);
+			    tokens.remove(2);
+			    tokens.remove(1);
+			    tokens.remove(0);
+		    }else if(tokens.get(0).getTipo().toString() == "IDENTIFICADORES"
+			    		&& tokens.get(1).getTipo().toString() ==  "OPLOG"
+			    		&& tokens.get(2).getTipo().toString() == "IDENTIFICADORES"
+			    	    && tokens.get(3).getTipo().toString() == "TERMINADORES"){
+		    	reglas.add("OPERACION_LOGICA");
+				tokens.remove(3);
+				tokens.remove(2);
+				tokens.remove(1);
+				tokens.remove(0);
+			}else {
 				reglas.add("Error");
 				int cont= 0;
 				while(tokens.get(cont).getTipo().toString() != "TERMINADORES") {
