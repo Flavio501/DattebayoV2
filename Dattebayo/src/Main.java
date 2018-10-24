@@ -154,8 +154,8 @@ public class Main extends javax.swing.JFrame {
         //ANALISIS LEXICO
         tokens = lex.parse(txtentrada.getText());
         for (Token token : tokens) {
-            String a = ("" + token.getTipo());
-            String b = ("" + token.getValor());
+            //String a = ("" + token.getTipo());
+            //String b = ("" + token.getValor());
 
             if(token.getTipo().toString() == "ERRORES") {
             	//errores.add(token.getValor());

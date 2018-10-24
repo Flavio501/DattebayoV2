@@ -50,7 +50,7 @@ public class Sint {
 			}else {
 				reglas.add("Error");
 				int cont= 0;
-				while(tokens.get(cont).getTipo().toString() != "TERMINADORES") {
+				while(tokens.get(cont).getTipo().toString() != "TERMINADORES" && cont < tokens.size()-1) {
 					cont++;
 				}
 				for(int i = cont;cont>=0;cont--) {
