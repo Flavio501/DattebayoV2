@@ -19,7 +19,7 @@ public class Main extends javax.swing.JFrame {
     DefaultTableModel dtm2 = new DefaultTableModel();
     DefaultTableModel dtm3 = new DefaultTableModel();
     ArrayList<Token> tokens;
-    ArrayList<String> reglas;
+    ArrayList<Node> reglas;
     Lex lex = new Lex();
     Sint sint = new Sint();
 
@@ -190,8 +190,8 @@ public class Main extends javax.swing.JFrame {
         
         //ANALISIS SINTACTICO
         reglas = sint.parse(tokens);
-        for(String s : reglas) {
-            dtm3.addRow(new Object[]{s});
+        for(Node s : reglas) {
+            dtm3.addRow(new Object[]{s.getNombre()});
         }
     }
 
