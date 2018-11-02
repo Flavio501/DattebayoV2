@@ -86,7 +86,16 @@ public class Sint {
 		    		
 		    		reglas.add(new Node(usedTokens,"OPERACION_LOGICA","SIMPLE",reglas.size()+1));
 		    		
-		    	//ERROR
+		    	// Llave de cierre
+			    }else if(tokens.get(0).getTipo().toString() == "AGRUPADORES_CIERRE"
+			    		&& tokens.get(0).getValor() == "}"){
+			    	usedTokens = new ArrayList<Token>();
+					usedTokens.add(tokens.get(0));
+					tokens.remove(0);
+		    		
+		    		reglas.add(new Node(usedTokens,"AGRUPADOR_CIERRE","COMPLEJO",reglas.size()+1));
+			    
+			    //ERROR
 				}else {
 					
 					usedTokens = new ArrayList<Token>();
