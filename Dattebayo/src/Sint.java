@@ -26,7 +26,8 @@ public class Sint {
 				if(tokens.get(0).getTipo().toString() == "IDENTIFICADORES"
 		    			&& tokens.get(1).getTipo().toString() == "ASIGNACION"
 		    			&& (tokens.get(2).getTipo().toString() == "ENTEROS" 
-		    				|| tokens.get(2).getTipo().toString() == "STRINGS")
+		    				|| tokens.get(2).getTipo().toString() == "STRINGS"
+		    				|| tokens.get(2).getTipo().toString() == "IDENTIFICADORES")
 		    			&& tokens.get(3).getTipo().toString() == "TERMINADORES"){
 					usedTokens = new ArrayList<Token>();
 					usedTokens.add(tokens.get(0));
@@ -43,14 +44,36 @@ public class Sint {
 					
 				//If
 				}else if(tokens.get(0).getTipo().toString() == "PALABRAS_RESERVADAS"
-						&& tokens.get(0).getValor() == "Byakugan"
+						&& tokens.get(0).getValor().matches("Byakugan")
 						&& tokens.get(1).getTipo().toString() == "AGRUPADORES_APERTURA"
-						&& tokens.get(1).getValor() == "(") {
-					//reglas.add("IF");
-		    		tokens.remove(3);
+						&& tokens.get(1).getValor().matches("\\(")
+						&& (tokens.get(2).getTipo().toString() == "IDENTIFICADORES"
+							|| tokens.get(2).getTipo().toString() == "ENTEROS")
+			    		&& tokens.get(3).getTipo().toString() ==  "OPLOG"
+			    		&& (tokens.get(4).getTipo().toString() == "IDENTIFICADORES"
+			    			|| tokens.get(4).getTipo().toString() == "ENTEROS")
+			    		&& tokens.get(5).getTipo().toString() == "AGRUPADORES_CIERRE"
+						&& tokens.get(5).getValor().matches("\\)")
+						&& tokens.get(6).getTipo().toString() == "AGRUPADORES_APERTURA"
+						&& tokens.get(6).getValor().matches("\\{")) {
+					
+					usedTokens = new ArrayList<Token>();
+					usedTokens.add(tokens.get(0));
+					usedTokens.add(tokens.get(1));
+					usedTokens.add(tokens.get(2));
+					usedTokens.add(tokens.get(3));
+					usedTokens.add(tokens.get(4));
+					usedTokens.add(tokens.get(5));
+					usedTokens.add(tokens.get(6));
+					tokens.remove(6);
+					tokens.remove(5);
+					tokens.remove(4);
+					tokens.remove(3);
 		    		tokens.remove(2);
 		    		tokens.remove(1);
 		    		tokens.remove(0);
+		    		
+		    		reglas.add(new Node(usedTokens,"IF","COMPLEJO",reglas.size()+1));
 		    		
 		    	//OPERACION ARITMETICA
 		    	}else if(tokens.get(0).getTipo().toString() == "ENTEROS"
@@ -70,9 +93,11 @@ public class Sint {
 		    		reglas.add(new Node(usedTokens,"OP_ARIT","SIMPLE",reglas.size()+1));
 		    		
 				//OPERACION LOGICA
-			    }else if(tokens.get(0).getTipo().toString() == "IDENTIFICADORES"
+			    }else if((tokens.get(0).getTipo().toString() == "IDENTIFICADORES"
+			    				|| tokens.get(0).getTipo().toString() == "ENTEROS")
 				    		&& tokens.get(1).getTipo().toString() ==  "OPLOG"
-				    		&& tokens.get(2).getTipo().toString() == "IDENTIFICADORES"
+				    		&& (tokens.get(2).getTipo().toString() == "IDENTIFICADORES"
+				    			|| tokens.get(2).getTipo().toString() == "ENTEROS")
 				    	    && tokens.get(3).getTipo().toString() == "TERMINADORES"){
 			    	usedTokens = new ArrayList<Token>();
 					usedTokens.add(tokens.get(0));
@@ -88,7 +113,7 @@ public class Sint {
 		    		
 		    	// Llave de cierre
 			    }else if(tokens.get(0).getTipo().toString() == "AGRUPADORES_CIERRE"
-			    		&& tokens.get(0).getValor() == "}"){
+			    		&& tokens.get(0).getValor().matches("}")){
 			    	usedTokens = new ArrayList<Token>();
 					usedTokens.add(tokens.get(0));
 					tokens.remove(0);
