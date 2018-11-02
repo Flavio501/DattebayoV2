@@ -23,13 +23,25 @@ public class Sint {
 			while(tokens.size() > 0) {
 				if(tokens.get(0).getTipo().toString() == "IDENTIFICADORES"
 		    			&& tokens.get(1).getTipo().toString() == "ASIGNACION"
-		    			&& tokens.get(2).getTipo().toString() == "ENTEROS"
+		    			&& (tokens.get(2).getTipo().toString() == "ENTEROS" 
+		    				|| tokens.get(2).getTipo().toString() == "STRINGS")
 		    			&& tokens.get(3).getTipo().toString() == "TERMINADORES"){
 					reglas.add("ASIGNACION");
 		    		tokens.remove(3);
 		    		tokens.remove(2);
 		    		tokens.remove(1);
 		    		tokens.remove(0);
+		    		//<if> → byakugan(<operacion_logica>){<statement>};
+				}else if(tokens.get(0).getTipo().toString() == "PALABRAS_RESERVADAS"
+						&& tokens.get(0).getValor() == "Byakugan"
+						&& tokens.get(1).getTipo().toString() == "AGRUPADORES_APERTURA"
+						&& tokens.get(1).getValor() == "(") {
+					reglas.add("IF");
+		    		tokens.remove(3);
+		    		tokens.remove(2);
+		    		tokens.remove(1);
+		    		tokens.remove(0);
+		    		//Sint.parse(tokens);
 		    	}else if(tokens.get(0).getTipo().toString() == "ENTEROS"
 			    		&& tokens.get(1).getTipo().toString() ==  "OPARIT"
 			    	    && tokens.get(2).getTipo().toString() ==  "ENTEROS"
@@ -44,12 +56,13 @@ public class Sint {
 				    		&& tokens.get(2).getTipo().toString() == "IDENTIFICADORES"
 				    	    && tokens.get(3).getTipo().toString() == "TERMINADORES"){
 			    	reglas.add("OPERACION_LOGICA");
+			    	//reglas.add Nodo con lista de tokens usados y nombre del nodo
 					tokens.remove(3);
 					tokens.remove(2);
 					tokens.remove(1);
 					tokens.remove(0);
 				}else {
-					reglas.add("Error");
+			 		reglas.add("Error");
 					int cont= 0;
 					while(tokens.get(cont).getTipo().toString() != "TERMINADORES" && cont < tokens.size()-1) {
 						cont++;
