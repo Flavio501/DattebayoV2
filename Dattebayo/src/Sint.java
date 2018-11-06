@@ -75,6 +75,105 @@ public class Sint {
 		    		
 		    		reglas.add(new Node(usedTokens,"IF","COMPLEJO",reglas.size()+1));
 		    		
+		    		//While
+				}else if(tokens.get(0).getTipo().toString() == "PALABRAS_RESERVADAS"
+						&& tokens.get(0).getValor().matches("Tsukuyomi")
+						&& tokens.get(1).getTipo().toString() == "AGRUPADORES_APERTURA"
+						&& tokens.get(1).getValor().matches("\\(")
+						&& (tokens.get(2).getTipo().toString() == "IDENTIFICADORES"
+							|| tokens.get(2).getTipo().toString() == "ENTEROS")
+			    		&& tokens.get(3).getTipo().toString() ==  "OPLOG"
+			    		&& (tokens.get(4).getTipo().toString() == "IDENTIFICADORES"
+			    			|| tokens.get(4).getTipo().toString() == "ENTEROS")
+			    		&& tokens.get(5).getTipo().toString() == "AGRUPADORES_CIERRE"
+						&& tokens.get(5).getValor().matches("\\)")
+						&& tokens.get(6).getTipo().toString() == "AGRUPADORES_APERTURA"
+						&& tokens.get(6).getValor().matches("\\{")) {
+					
+					usedTokens = new ArrayList<Token>();
+					usedTokens.add(tokens.get(0));
+					usedTokens.add(tokens.get(1));
+					usedTokens.add(tokens.get(2));
+					usedTokens.add(tokens.get(3));
+					usedTokens.add(tokens.get(4));
+					usedTokens.add(tokens.get(5));
+					usedTokens.add(tokens.get(6));
+					tokens.remove(6);
+					tokens.remove(5);
+					tokens.remove(4);
+					tokens.remove(3);
+		    		tokens.remove(2);
+		    		tokens.remove(1);
+		    		tokens.remove(0);
+		    		
+		    		reglas.add(new Node(usedTokens,"WHILE","COMPLEJO",reglas.size()+1));
+		    		
+		    		//Else
+				}else if(tokens.get(0).getTipo().toString() == "PALABRAS_RESERVADAS"
+						&& tokens.get(0).getValor().matches("Rinnegan")
+						&& tokens.get(1).getTipo().toString() == "AGRUPADORES_APERTURA"
+						&& tokens.get(1).getValor().matches("\\(")
+						&& (tokens.get(2).getTipo().toString() == "IDENTIFICADORES"
+							|| tokens.get(2).getTipo().toString() == "ENTEROS")
+			    		&& tokens.get(3).getTipo().toString() ==  "OPLOG"
+			    		&& (tokens.get(4).getTipo().toString() == "IDENTIFICADORES"
+			    			|| tokens.get(4).getTipo().toString() == "ENTEROS")
+			    		&& tokens.get(5).getTipo().toString() == "AGRUPADORES_CIERRE"
+						&& tokens.get(5).getValor().matches("\\)")
+						&& tokens.get(6).getTipo().toString() == "AGRUPADORES_APERTURA"
+						&& tokens.get(6).getValor().matches("\\{")) {
+					
+					usedTokens = new ArrayList<Token>();
+					usedTokens.add(tokens.get(0));
+					usedTokens.add(tokens.get(1));
+					usedTokens.add(tokens.get(2));
+					usedTokens.add(tokens.get(3));
+					usedTokens.add(tokens.get(4));
+					usedTokens.add(tokens.get(5));
+					usedTokens.add(tokens.get(6));
+					tokens.remove(6);
+					tokens.remove(5);
+					tokens.remove(4);
+					tokens.remove(3);
+		    		tokens.remove(2);
+		    		tokens.remove(1);
+		    		tokens.remove(0);
+		    		
+		    		reglas.add(new Node(usedTokens,"ELSE","COMPLEJO",reglas.size()+1));
+		    		
+		    		//Else if
+				}else if(tokens.get(0).getTipo().toString() == "PALABRAS_RESERVADAS"
+						&& tokens.get(0).getValor().matches("Sharingan")
+						&& tokens.get(1).getTipo().toString() == "AGRUPADORES_APERTURA"
+						&& tokens.get(1).getValor().matches("\\(")
+						&& (tokens.get(2).getTipo().toString() == "IDENTIFICADORES"
+							|| tokens.get(2).getTipo().toString() == "ENTEROS")
+			    		&& tokens.get(3).getTipo().toString() ==  "OPLOG"
+			    		&& (tokens.get(4).getTipo().toString() == "IDENTIFICADORES"
+			    			|| tokens.get(4).getTipo().toString() == "ENTEROS")
+			    		&& tokens.get(5).getTipo().toString() == "AGRUPADORES_CIERRE"
+						&& tokens.get(5).getValor().matches("\\)")
+						&& tokens.get(6).getTipo().toString() == "AGRUPADORES_APERTURA"
+						&& tokens.get(6).getValor().matches("\\{")) {
+					
+					usedTokens = new ArrayList<Token>();
+					usedTokens.add(tokens.get(0));
+					usedTokens.add(tokens.get(1));
+					usedTokens.add(tokens.get(2));
+					usedTokens.add(tokens.get(3));
+					usedTokens.add(tokens.get(4));
+					usedTokens.add(tokens.get(5));
+					usedTokens.add(tokens.get(6));
+					tokens.remove(6);
+					tokens.remove(5);
+					tokens.remove(4);
+					tokens.remove(3);
+		    		tokens.remove(2);
+		    		tokens.remove(1);
+		    		tokens.remove(0);
+		    		
+		    		reglas.add(new Node(usedTokens,"ELSE_IF","COMPLEJO",reglas.size()+1));
+		    		
 		    	//OPERACION ARITMETICA
 		    	}else if(tokens.get(0).getTipo().toString() == "ENTEROS"
 			    		&& tokens.get(1).getTipo().toString() ==  "OPARIT"
