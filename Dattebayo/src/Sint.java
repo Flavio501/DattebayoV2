@@ -22,8 +22,33 @@ public class Sint {
 		ArrayList<Token> usedTokens; //= new ArrayList<Token>();
 		try {
 			while(tokens.size() > 0) {
+				//Main
+				if(tokens.get(0).getTipo().toString() == "TIPOS"
+						&& tokens.get(0).getValor().matches("Chidori")
+						&& tokens.get(1).getTipo().toString() == "PALABRAS_RESERVADAS"
+						&& tokens.get(1).getValor().matches("Hokage")
+						&& tokens.get(2).getTipo().toString() == "AGRUPADORES_APERTURA"
+						&& tokens.get(2).getValor().matches("\\(")
+			    		&& tokens.get(3).getTipo().toString() == "AGRUPADORES_CIERRE"
+						&& tokens.get(3).getValor().matches("\\)")
+						&& tokens.get(4).getTipo().toString() == "AGRUPADORES_APERTURA"
+						&& tokens.get(4).getValor().matches("\\{")) {
+					usedTokens = new ArrayList<Token>();
+					usedTokens.add(tokens.get(0));
+					usedTokens.add(tokens.get(1));
+					usedTokens.add(tokens.get(2));
+					usedTokens.add(tokens.get(3));
+					usedTokens.add(tokens.get(4));
+					tokens.remove(4);
+					tokens.remove(3);
+		    		tokens.remove(2);
+		    		tokens.remove(1);
+		    		tokens.remove(0);
+		    		
+					reglas.add(new Node(usedTokens,"MAIN","COMPLEJO",reglas.size()+1));
+					
 				//Asignacion
-				if(tokens.get(0).getTipo().toString() == "IDENTIFICADORES"
+				}else if(tokens.get(0).getTipo().toString() == "IDENTIFICADORES"
 		    			&& tokens.get(1).getTipo().toString() == "ASIGNACION"
 		    			&& (tokens.get(2).getTipo().toString() == "ENTEROS" 
 		    				|| tokens.get(2).getTipo().toString() == "STRINGS"
@@ -40,7 +65,29 @@ public class Sint {
 		    		tokens.remove(0);
 		    		
 					reglas.add(new Node(usedTokens,"ASIGNACION","SIMPLE",reglas.size()+1));
-		    		//<if> → byakugan(<operacion_logica>){<statement>};
+					
+				//Declaracion
+				}else if(tokens.get(0).getTipo().toString() == "TIPOS"
+						&& tokens.get(1).getTipo().toString() == "IDENTIFICADORES"
+		    			&& tokens.get(2).getTipo().toString() == "ASIGNACION"
+		    			&& (tokens.get(3).getTipo().toString() == "ENTEROS" 
+		    				|| tokens.get(3).getTipo().toString() == "STRINGS"
+    						|| tokens.get(3).getTipo().toString() == "FLOATS"
+		    				|| tokens.get(3).getTipo().toString() == "IDENTIFICADORES")
+		    			&& tokens.get(4).getTipo().toString() == "TERMINADORES"){
+					usedTokens = new ArrayList<Token>();
+					usedTokens.add(tokens.get(0));
+					usedTokens.add(tokens.get(1));
+					usedTokens.add(tokens.get(2));
+					usedTokens.add(tokens.get(3));
+					usedTokens.add(tokens.get(4));
+					tokens.remove(4);
+					tokens.remove(3);
+		    		tokens.remove(2);
+		    		tokens.remove(1);
+		    		tokens.remove(0);
+		    		
+					reglas.add(new Node(usedTokens,"DECLARACION","SIMPLE",reglas.size()+1));
 					
 				//If
 				}else if(tokens.get(0).getTipo().toString() == "PALABRAS_RESERVADAS"

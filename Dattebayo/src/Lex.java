@@ -10,7 +10,7 @@ public class Lex {
 	
 	public ArrayList<Token> parse(String input) {
         ArrayList<Token> tokens = new ArrayList<Token>();
-        StringTokenizer st = new StringTokenizer(input,"\t\n\r\f()[]{}+/-*; ",true);
+        StringTokenizer st = new StringTokenizer(input,"\t\n\r\f()[]{}+/-*=; ",true);
         
         while (st.hasMoreTokens()) {
             String palabra = st.nextToken();
