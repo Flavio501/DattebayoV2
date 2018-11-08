@@ -344,7 +344,7 @@ public class Sint {
 					usedTokens.add(tokens.get(0));
 					tokens.remove(0);
 		    		
-		    		reglas.add(new Node(usedTokens,"AGRUPADOR_CIERRE","COMPLEJO",reglas.size()+1));
+		    		reglas.add(new Node(usedTokens,"AGRUPADOR_CIERRE","SIMPLE",reglas.size()+1));
 			    
 			    //ERROR
 				}else {
@@ -361,7 +361,26 @@ public class Sint {
 					}
 				}
 			}
-			return reglas;
+			
+			int openers = 0;
+			int closers = 0;
+			
+			for(Node n : reglas) {
+				if(n.getTipo().toString().matches("COMPLEJO")) {
+					openers = openers+1;
+				}else if(n.getNombre().toString().matches("AGRUPADOR_CIERRE")) {
+					closers=closers+1;
+				}
+			}
+			
+			if(openers != closers) {
+				usedTokens = new ArrayList<Token>();
+				reglas.add(new Node(usedTokens,"ERROR_CIERRE","SIMPLE",reglas.size()+1));
+				return reglas;
+			}else {
+				return reglas;
+			}
+			
 		}catch(IndexOutOfBoundsException e) {
 			usedTokens = new ArrayList<Token>();
 			reglas.add(new Node(usedTokens,"ERROR","SIMPLE",reglas.size()+1));
