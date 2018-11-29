@@ -18,6 +18,7 @@ public class Main extends javax.swing.JFrame {
     DefaultTableModel dtm = new DefaultTableModel();
     DefaultTableModel dtm2 = new DefaultTableModel();
     DefaultTableModel dtm3 = new DefaultTableModel();
+    DefaultTableModel dtm4 = new DefaultTableModel();
     ArrayList<Token> tokens;
     ArrayList<Node> reglas;
     ArrayList<Tupla> tuplas;
@@ -46,6 +47,8 @@ public class Main extends javax.swing.JFrame {
         jTable2 = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTable4 = new javax.swing.JTable();
 
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -113,6 +116,19 @@ public class Main extends javax.swing.JFrame {
                 }
             ));
             jScrollPane4.setViewportView(jTable3);
+            
+         jTable4.setModel(new javax.swing.table.DefaultTableModel(
+                 new Object [][] {
+                     {null, null, null, null},
+                     {null, null, null, null},
+                     {null, null, null, null},
+                     {null, null, null, null}
+                 },
+                 new String [] {
+                     "Title 1", "Title 2", "Title 3", "Title 4"
+                 }
+             ));
+             jScrollPane5.setViewportView(jTable4);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -137,7 +153,9 @@ public class Main extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                    			.addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    			.addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    			.addGap(18, 18, 18)
+                    			.addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -157,7 +175,8 @@ public class Main extends javax.swing.JFrame {
                 	.addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)	
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)))
                 .addGap(100, 100, 100)
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -193,13 +212,13 @@ public class Main extends javax.swing.JFrame {
         //ANALISIS SINTACTICO
         reglas = sint.parse(tokens);
         for(Node s : reglas) {
-            //dtm3.addRow(new Object[]{s.getNombre()});
+            dtm3.addRow(new Object[]{s.getNombre()});
         }
         
         //ANALISIS SEMANTICO
         tuplas = sem.parse(reglas);
         for(Tupla t : tuplas) {
-        	dtm3.addRow(new Object[]{t.getOperador() + ", " + t.getOperando1()+ ", " + 
+        	dtm4.addRow(new Object[]{t.getOperador() + ", " + t.getOperando1()+ ", " + 
         t.getOperando2()+ ", " + t.getVarTemp()});
         }
     }
@@ -239,11 +258,14 @@ public class Main extends javax.swing.JFrame {
             dtm.addColumn("TOKEN");
             dtm2.addColumn("ERRORES");
             dtm3.addColumn("REGLA");
+            dtm4.addColumn("SEMANTICA");
+            
 
 
             jTable2.setModel(dtm2);
             jTable1.setModel(dtm);
             jTable3.setModel(dtm3);
+            jTable4.setModel(dtm4);
 
 
         } catch (Exception ex) {
@@ -302,9 +324,11 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
+    private javax.swing.JTable jTable4;
     private javax.swing.JTextArea txtentrada;
 
 }
