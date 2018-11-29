@@ -20,8 +20,10 @@ public class Main extends javax.swing.JFrame {
     DefaultTableModel dtm3 = new DefaultTableModel();
     ArrayList<Token> tokens;
     ArrayList<Node> reglas;
+    ArrayList<Tupla> tuplas;
     Lex lex = new Lex();
     Sint sint = new Sint();
+    Sem sem = new Sem();
 
     public Main() {
         initComponents();
@@ -191,7 +193,14 @@ public class Main extends javax.swing.JFrame {
         //ANALISIS SINTACTICO
         reglas = sint.parse(tokens);
         for(Node s : reglas) {
-            dtm3.addRow(new Object[]{s.getNombre()});
+            //dtm3.addRow(new Object[]{s.getNombre()});
+        }
+        
+        //ANALISIS SEMANTICO
+        tuplas = sem.parse(reglas);
+        for(Tupla t : tuplas) {
+        	dtm3.addRow(new Object[]{t.getOperador() + ", " + t.getOperando1()+ ", " + 
+        t.getOperando2()+ ", " + t.getVarTemp()});
         }
     }
 
@@ -229,7 +238,7 @@ public class Main extends javax.swing.JFrame {
             dtm.addColumn("TIPO");
             dtm.addColumn("TOKEN");
             dtm2.addColumn("ERRORES");
-            dtm3.addColumn("Regla");
+            dtm3.addColumn("REGLA");
 
 
             jTable2.setModel(dtm2);
