@@ -11,11 +11,12 @@ public class Sem {
 			for(int i = 0; i < reglas.size();i++) {
 				tokens = reglas.get(i).getTokens();
 				System.out.println("Contador: " + i);
+				System.out.println("Regla: "+ reglas.get(i).getNombre());
 				System.out.println("Tokens: "+ tokens.size());
-				System.out.println("Tipo: " + tokens.get(0).getTipo() + ", Valor: " + tokens.get(0).getValor());
-				System.out.println("Tipo: " + tokens.get(3).getTipo() + ", Valor: " + tokens.get(3).getValor());
 				switch(reglas.get(i).getNombre().toString()) {
 					case "INICIALIZACION":
+						System.out.println("Tipo: " + tokens.get(0).getTipo() + ", Valor: " + tokens.get(0).getValor());
+						System.out.println("Tipo: " + tokens.get(3).getTipo() + ", Valor: " + tokens.get(3).getValor()+"\n");
 						switch(tokens.get(0).getValor().toString()) {
 							case "Chidori":
 								if(tokens.get(3).getTipo().toString().matches("ENTEROS")) {
@@ -68,10 +69,14 @@ public class Sem {
 						}
 						break;
 					case "ASIGNACION":
+						//System.out.println("Tipo: " + checkInit(tokens.get(0),initVars).getOperando1().getTipo().toString() + ", Valor: " + tokens.get(0).getValor());
+						//System.out.println("Tipo: " + checkInit(tokens.get(2),initVars).getOperando1().getTipo().toString() + ", Valor: " + tokens.get(2).getValor()+"\n");
 						//evaluar tipos y declaracion
 						if(tokens.get(0).getTipo().toString().matches("IDENTIFICADORES") && tokens.get(2).getTipo().toString().matches("IDENTIFICADORES")) {
 							if(checkInit(tokens.get(0),initVars).getOperando1().getTipo().toString().matches(checkInit(tokens.get(2),initVars).getOperando1().getTipo().toString())) {
 								tuplas.add(new Tupla("=",tokens.get(2),tokens.get(0).getValor()));
+							}else {
+								tuplas.add(new Tupla("ERROR_ASIGN",reglas.get(i).getNombre()));
 							}
 						}else if(checkInit(tokens.get(0),initVars).getOperando1().getTipo().toString().matches(tokens.get(2).getTipo().toString())){
 							tuplas.add(new Tupla("=",tokens.get(2),tokens.get(0).getValor()));
