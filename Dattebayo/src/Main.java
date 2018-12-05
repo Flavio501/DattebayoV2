@@ -218,8 +218,12 @@ public class Main extends javax.swing.JFrame {
         //ANALISIS SEMANTICO
         tuplas = sem.parse(reglas);
         for(Tupla t : tuplas) {
-        	dtm4.addRow(new Object[]{t.getOperador() + ", " + t.getOperando1()+ ", " + 
-        t.getOperando2()+ ", " + t.getVarTemp()});
+        	try {
+        		dtm4.addRow(new Object[]{t.getOperador() + ", " + t.getOperando1().getValor()+ ", " + 
+        		        t.getOperando2().getValor()+ ", " + t.getVarTemp()});
+        	}catch(NullPointerException e) {
+        		e.printStackTrace();
+        	}
         }
     }
 

@@ -4,6 +4,7 @@ public class Sem {
 	
 	public ArrayList<Tupla> parse(ArrayList<Node> reglas){
 		ArrayList<Tupla> tuplas = new ArrayList<Tupla>();
+		ArrayList<Tupla> initVars = new ArrayList<Tupla>();
 		ArrayList<Token> tokens = new ArrayList<Token>();
 		
 		try {
@@ -18,31 +19,35 @@ public class Sem {
 						switch(tokens.get(0).getValor().toString()) {
 							case "Chidori":
 								if(tokens.get(3).getTipo().toString().matches("ENTEROS")) {
-									tuplas.add(new Tupla("=",tokens.get(3).getValor(),"",tokens.get(1).getValor()));
+									tuplas.add(new Tupla("=",tokens.get(3),tokens.get(1).getValor()));
+									initVars.add(new Tupla("=",tokens.get(3),tokens.get(1).getValor()));
 								}else {
-									tuplas.add(new Tupla("ERROR_INI",reglas.get(i).getNombre(),String.valueOf(i),""));
+									tuplas.add(new Tupla("ERROR_INI",reglas.get(i).getNombre()));
 								}
 								break;
 							case "Rasengan":
 								if(tokens.get(3).getTipo().toString().matches("FLOATS")) {
-									tuplas.add(new Tupla("=",tokens.get(3).getValor(),"",tokens.get(1).getValor()));
+									tuplas.add(new Tupla("=",tokens.get(3),tokens.get(1).getValor()));
+									initVars.add(new Tupla("=",tokens.get(3),tokens.get(1).getValor()));
 								}else {
-									tuplas.add(new Tupla("ERROR_INI",reglas.get(i).getNombre(),String.valueOf(i),""));
+									tuplas.add(new Tupla("ERROR_INI",reglas.get(i).getNombre()));
 								}
 								break;
 							case "Susanoo":
 								if(tokens.get(3).getTipo().toString().matches("STRINGS")) {
-									tuplas.add(new Tupla("=",tokens.get(3).getValor(),"",tokens.get(1).getValor()));
+									tuplas.add(new Tupla("=",tokens.get(3),tokens.get(1).getValor()));
+									initVars.add(new Tupla("=",tokens.get(3),tokens.get(1).getValor()));
 								}else {
-									tuplas.add(new Tupla("ERROR_INI",reglas.get(i).getNombre(),String.valueOf(i),""));
+									tuplas.add(new Tupla("ERROR_INI",reglas.get(i).getNombre()));
 								}
 								break;
 							case "Chakra":
 								if(tokens.get(3).getTipo().toString().matches("STRINGS")
 										&& tokens.get(3).getValor().length()==3) {
-									tuplas.add(new Tupla("=",tokens.get(3).getValor(),"",tokens.get(1).getValor()));
+									tuplas.add(new Tupla("=",tokens.get(3),tokens.get(1).getValor()));
+									initVars.add(new Tupla("=",tokens.get(3),tokens.get(1).getValor()));
 								}else {
-									tuplas.add(new Tupla("ERROR_INI",reglas.get(i).getNombre(),String.valueOf(i),""));
+									tuplas.add(new Tupla("ERROR_INI",reglas.get(i).getNombre()));
 								}
 								break;
 							case "Shuriken":
@@ -50,19 +55,29 @@ public class Sem {
 								if(tokens.get(3).getTipo().toString().matches("STRINGS") 
 										&& (tokens.get(3).getValor().matches("\"Kurama\"")
 												||tokens.get(3).getValor().matches("\"Gyuki\""))) {
-									tuplas.add(new Tupla("=",tokens.get(3).getValor(),"",tokens.get(1).getValor()));
+									tuplas.add(new Tupla("=",tokens.get(3),tokens.get(1).getValor()));
+									initVars.add(new Tupla("=",tokens.get(3),tokens.get(1).getValor()));
 								}else {
-									tuplas.add(new Tupla("ERROR_INI",reglas.get(i).getNombre(),String.valueOf(i),""));
+									tuplas.add(new Tupla("ERROR_INI",reglas.get(i).getNombre()));
 								}
 								break;
 							default:
 								//return error
-								tuplas.add(new Tupla("ERROR_INI",reglas.get(0).getNombre(),String.valueOf(reglas.get(0).getEntrada()),""));
+								tuplas.add(new Tupla("ERROR_INI",reglas.get(i).getNombre()));
 								break;
 						}
 						break;
 					case "ASIGNACION":
 						//evaluar tipos y declaracion
+						if(tokens.get(0).getTipo().toString().matches("IDENTIFICADORES") && tokens.get(2).getTipo().toString().matches("IDENTIFICADORES")) {
+							if(checkInit(tokens.get(0),initVars).getOperando1().getTipo().toString().matches(checkInit(tokens.get(2),initVars).getOperando1().getTipo().toString())) {
+								tuplas.add(new Tupla("=",tokens.get(2),tokens.get(0).getValor()));
+							}
+						}else if(checkInit(tokens.get(0),initVars).getOperando1().getTipo().toString().matches(tokens.get(2).getTipo().toString())){
+							tuplas.add(new Tupla("=",tokens.get(2),tokens.get(0).getValor()));
+						}else {
+							tuplas.add(new Tupla("ERROR_ASIGN",reglas.get(i).getNombre()));
+						}
 						break;
 				}
 			}
@@ -70,8 +85,17 @@ public class Sem {
 		}catch(Exception e) {
 			//Manejar excepcion
 			e.printStackTrace();
-			tuplas.add(new Tupla("ERROR_INDEX","","",""));
+			tuplas.add(new Tupla("ERROR_INDEX",""));
 			return tuplas;
 		}
+	}
+	
+	public Tupla checkInit(Token var,ArrayList<Tupla> initVars) {
+		for(Tupla t : initVars) {
+			if(var.getValor().matches(t.getVarTemp())) {
+				return t;
+			}
+		}
+		return null;
 	}
 }

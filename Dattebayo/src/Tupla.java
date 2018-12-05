@@ -2,14 +2,27 @@
 public class Tupla {
 	
 	String operador;
-	String operando1;
-	String operando2;
+	Token operando1;
+	Token operando2;
 	String varTemp;
 	
-	public Tupla(String op, String opand1, String opand2, String var) {
+	public Tupla(String op, Token opand1, Token opand2, String var) {
 		this.operador = op;
 		this.operando1 = opand1;
 		this.operando2 = opand2;
+		this.varTemp = var;
+	}
+	
+	public Tupla(String op, Token opand1, String var) {
+		this.operador = op;
+		this.operando1 = opand1;
+		this.operando2 = new Token();
+		this.varTemp = var;
+	}
+	public Tupla(String op, String var) {
+		this.operador = op;
+		this.operando1 = new Token();
+		this.operando2 = new Token();
 		this.varTemp = var;
 	}
 	
@@ -17,11 +30,11 @@ public class Tupla {
 		return this.operador;
 	}
 	
-	public String getOperando1() {
+	public Token getOperando1() {
 		return this.operando1;
 	}
 	
-	public String getOperando2() {
+	public Token getOperando2() {
 		return this.operando2;
 	}
 	
