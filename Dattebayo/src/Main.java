@@ -259,8 +259,6 @@ public class Main extends javax.swing.JFrame {
             dtm2.addColumn("ERRORES");
             dtm3.addColumn("REGLA");
             dtm4.addColumn("SEMANTICA");
-            
-
 
             jTable2.setModel(dtm2);
             jTable1.setModel(dtm);
@@ -281,6 +279,7 @@ public class Main extends javax.swing.JFrame {
         int a = dtm.getRowCount();
         int b = dtm2.getRowCount();
         int c = dtm3.getRowCount();
+        int d = dtm4.getRowCount();
         for (int i = 0; i < a; i++) {
             dtm.removeRow(0);  
         }
@@ -289,6 +288,9 @@ public class Main extends javax.swing.JFrame {
         }
         for (int i = 0; i < c; i++) {
             dtm3.removeRow(0);  
+        }
+        for (int i = 0; i < d; i++) {
+            dtm4.removeRow(0);  
         }
     }
     public static void main(String args[]) {
@@ -314,7 +316,6 @@ public class Main extends javax.swing.JFrame {
             }
         });
     }
-
 
     private javax.swing.JButton btnanalizar;
     private javax.swing.JButton btnsubir;
