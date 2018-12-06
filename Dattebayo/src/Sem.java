@@ -85,60 +85,6 @@ public class Sem {
 							tuplas.add(new Tupla("ERROR_ASIGN",reglas.get(i).getNombre()));
 						}
 						break;
-						case "OP_ARIT":
-					switch(tokens.get(1).getValor().toString()){
-						case "+":
-							if(tokens.get(0).getTipo().getValor().matches() && tokens.get(2).getTipo().getValor().matches()) {
-								if(checkInit(tokens.get(0),initVars).getOperando1().getTipo().toString().matches(checkInit(tokens.get(2),initVars).getOperando1().getTipo().toString())) {
-									tuplas.add(new Tupla("+",tokens.get(2),tokens.get(0).getValor()));
-								}else {
-									tuplas.add(new Tupla("ERROR_ASIGN",reglas.get(i).getValor()));
-								}
-							}else if(checkInit(tokens.get(0),initVars).getOperando1().getTipo().toString().matches(tokens.get(2).getTipo().toString())){
-								tuplas.add(new Tupla("+",tokens.get(2),tokens.get(0).getValor()));
-							}else {
-								tuplas.add(new Tupla("ERROR_ASIGN",reglas.get(i).getValor()));
-							}
-							break;
-						case "-":
-							if(tokens.get(0).getTipo().getValor().matches() && tokens.get(2).getTipo().getValor().matches()) {
-								if(checkInit(tokens.get(0),initVars).getOperando1().getTipo().toString().matches(checkInit(tokens.get(2),initVars).getOperando1().getTipo().toString())) {
-									tuplas.add(new Tupla("-",tokens.get(2),tokens.get(0).getValor()));
-								}else {
-									tuplas.add(new Tupla("ERROR_ASIGN",reglas.get(i).getValor()));
-								}
-							}else if(checkInit(tokens.get(0),initVars).getOperando1().getTipo().toString().matches(tokens.get(2).getTipo().toString())){
-								tuplas.add(new Tupla("-",tokens.get(2),tokens.get(0).getValor()));
-							}else {
-								tuplas.add(new Tupla("ERROR_ASIGN",reglas.get(i).getValor()));
-							}
-							break;
-						case "/":
-							if(tokens.get(0).getTipo().getValor().matches() && tokens.get(2).getTipo().getValor().matches()) {
-								if(checkInit(tokens.get(0),initVars).getOperando1().getTipo().toString().matches(checkInit(tokens.get(2),initVars).getOperando1().getTipo().toString())) {
-									tuplas.add(new Tupla("/",tokens.get(2),tokens.get(0).getValor()));
-								}else {
-									tuplas.add(new Tupla("ERROR_ASIGN",reglas.get(i).getValor()));
-								}
-							}else if(checkInit(tokens.get(0),initVars).getOperando1().getTipo().toString().matches(tokens.get(2).getTipo().toString())){
-								tuplas.add(new Tupla("/",tokens.get(2),tokens.get(0).getValor()));
-							}else {
-								tuplas.add(new Tupla("ERROR_ASIGN",reglas.get(i).getValor()));
-							}
-							break;
-						case "*":
-							if(tokens.get(0).getTipo().getValor().matches() && tokens.get(2).getTipo().getValor().matches()) {
-								if(checkInit(tokens.get(0),initVars).getOperando1().getTipo().toString().matches(checkInit(tokens.get(2),initVars).getOperando1().getTipo().toString())) {
-									tuplas.add(new Tupla("*",tokens.get(2),tokens.get(0).getValor()));
-								}else {
-									tuplas.add(new Tupla("ERROR_ASIGN",reglas.get(i).getValor()));
-								}
-							}else if(checkInit(tokens.get(0),initVars).getOperando1().getTipo().toString().matches(tokens.get(2).getTipo().toString())){
-								tuplas.add(new Tupla("*",tokens.get(2),tokens.get(0).getValor()));
-							}else {
-								tuplas.add(new Tupla("ERROR_ASIGN",reglas.get(i).getValor()));
-							}
-							break;
 				}
 			}
 			return tuplas;
