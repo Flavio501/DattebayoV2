@@ -85,6 +85,51 @@ public class Sem {
 							tuplas.add(new Tupla("ERROR_ASIGN",reglas.get(i).getNombre()));
 						}
 						break;
+					case "ASIGNACION_OPARIT":
+						//Evaluar div/0 con ID
+						if(tokens.get(3).getValor().toString().matches("/") 
+								&& tokens.get(4).getTipo().toString().matches("IDENTIFICADORES") 
+								&& checkInit(tokens.get(4),initVars).getOperando1().getValor().toString().matches("0")) {
+							tuplas.add(new Tupla("ERROR_ASIGNOPARIT",tokens.get(0),tokens.get(2),reglas.get(i).getNombre()));
+						//Evaluar div/0 sin id
+						}else if(tokens.get(3).getValor().toString().matches("/") 
+								&& tokens.get(4).getValor().toString().matches("0")) {
+							tuplas.add(new Tupla("ERROR_ASIGNOPARIT",tokens.get(0),tokens.get(2),reglas.get(i).getNombre()));
+						//Operaciones sin div/0
+						}else {
+							//ambos son ID
+							if(tokens.get(2).getTipo().toString().matches("IDENTIFICADORES") && tokens.get(4).getTipo().toString().matches("IDENTIFICADORES")) {
+								if(checkInit(tokens.get(2),initVars).getOperando1().getTipo().toString().matches(checkInit(tokens.get(4),initVars).getOperando1().getTipo().toString())
+										&& checkInit(tokens.get(0),initVars).getOperando1().getTipo().toString().matches(checkInit(tokens.get(2),initVars).getOperando1().getTipo().toString())) {
+									tuplas.add(new Tupla("=",tokens.get(2),tokens.get(4),tokens.get(0).getValor()));
+								}else {
+									tuplas.add(new Tupla("ERROR_ASIGNOPARIT",tokens.get(2),tokens.get(4),reglas.get(i).getNombre()));
+								}
+							//Solo el primero es ID
+							}else if(tokens.get(2).getTipo().toString().matches("IDENTIFICADORES") && !tokens.get(4).getTipo().toString().matches("IDENTIFICADORES")){
+								if(checkInit(tokens.get(2),initVars).getOperando1().getTipo().toString().matches(tokens.get(4).getTipo().toString())
+										&& checkInit(tokens.get(0),initVars).getOperando1().getTipo().toString().matches(checkInit(tokens.get(2),initVars).getOperando1().getTipo().toString())) {
+									tuplas.add(new Tupla("=",tokens.get(2),tokens.get(4),tokens.get(0).getValor()));
+								}else {
+									tuplas.add(new Tupla("ERROR_ASIGNOPARIT",tokens.get(2),tokens.get(4),reglas.get(i).getNombre()));
+								}
+							//Solo el segundo es ID
+							}else if(!tokens.get(2).getTipo().toString().matches("IDENTIFICADORES") && tokens.get(4).getTipo().toString().matches("IDENTIFICADORES")){
+								if(tokens.get(2).getTipo().toString().matches(checkInit(tokens.get(4),initVars).getOperando1().getTipo().toString())
+										&& checkInit(tokens.get(0),initVars).getOperando1().getTipo().toString().matches(tokens.get(2).getTipo().toString())) {
+									tuplas.add(new Tupla("=",tokens.get(2),tokens.get(4),tokens.get(0).getValor()));
+								}else {
+									tuplas.add(new Tupla("ERROR_ASIGNOPARIT",tokens.get(2),tokens.get(4),reglas.get(i).getNombre()));
+								}
+							//Ninguno es ID
+							}else if(tokens.get(2).getTipo().toString().matches(tokens.get(4).getTipo().toString())
+									&& checkInit(tokens.get(0),initVars).getOperando1().getTipo().toString().matches(tokens.get(2).getTipo().toString())){
+								tuplas.add(new Tupla("=",tokens.get(2),tokens.get(4),tokens.get(0).getValor()));
+							}else {
+								tuplas.add(new Tupla("ERROR_ASIGNOPARIT",reglas.get(i).getNombre()));
+							}
+						}
+						break;
 				}
 			}
 			return tuplas;
